@@ -9,7 +9,7 @@ public class PostageCalculatorTest {
     @Test
     public void apply_small_parcel_pricing_to_a_package_with_lower_tier_dimensions_and_weight() {
 
-        Money expectedCost = new Money(Currency.GBP, 120);
+        Money expectedCost = new Money(Currency.GBP, 12_000);
         PostageCalculator postageCalculator = new PostageCalculator();
         int weight = 60;
         int height = 229;

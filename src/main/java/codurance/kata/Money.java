@@ -1,6 +1,5 @@
 package codurance.kata;
 
-public class Money {
-    public Money(Object p0, int i) {
-    }
+public record Money(Currency currency, int amountInPence) {
+
 }
