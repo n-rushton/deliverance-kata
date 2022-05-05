@@ -6,6 +6,8 @@ public class Money {
     private final Currency currency;
     private final BigDecimal amount;
     private final BigDecimal CONVERSION_CHARGE = BigDecimal.valueOf(20);
+    private final double EUR_EXCHANGE_RATE = 1.19;
+    private final double USD_EXCHANGE_RATE = 1.25;
 
     public Money(Currency currency, BigDecimal amount) {
         this.currency = currency;
@@ -26,9 +28,9 @@ public class Money {
 
     private BigDecimal getConversionRate(Currency currencyToConvertTo) {
         if (currencyToConvertTo == Currency.EUR) {
-            return BigDecimal.valueOf(1.19);
+            return BigDecimal.valueOf(EUR_EXCHANGE_RATE);
         }
-        return BigDecimal.valueOf(1.25);
+        return BigDecimal.valueOf(USD_EXCHANGE_RATE);
     }
 
     @Override
