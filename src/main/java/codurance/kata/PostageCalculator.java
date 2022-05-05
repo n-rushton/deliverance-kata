@@ -9,7 +9,7 @@ public class PostageCalculator {
 
         Money parcelCost = parcel.calculate();
 
-        if (currency.equals(Currency.EUR)) {
+        if (currency.equals(Currency.EUR) || currency.equals(Currency.USD)) {
             parcelCost = parcelCost.convert(currency);
         }
 
