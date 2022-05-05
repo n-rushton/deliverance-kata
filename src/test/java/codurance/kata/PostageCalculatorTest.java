@@ -41,7 +41,7 @@ public class PostageCalculatorTest {
     }
 
     @Test
-    public void apply_large_parcel_pricing_to_a_package_with_lower_tier_dimensions_but_large_tier_weight() {
+    public void apply_large_parcel_pricing_to_a_package_with_lower_tier_dimensions_but_large_tier_weight_pricing_strategy_1() {
 
         BigDecimal expectedPriceInPence = BigDecimal.valueOf(LOWER_TIER_HEIGHT * LOWER_TIER_WIDTH * LOWER_TIER_DEPTH * 6 * 0.001);
         Money expectedCost = new Money(Currency.GBP, expectedPriceInPence);
@@ -51,5 +51,19 @@ public class PostageCalculatorTest {
 
         assertEquals(expectedCost, postageCost);
     }
+
+    @Test
+    public void apply_large_parcel_pricing_to_a_package_with_lower_tier_dimensions_but_large_tier_weight_pricing_strategy_2() {
+
+        BigDecimal expectedPriceInPence = BigDecimal.valueOf(TOP_TIER_WEIGHT * 6);
+        Money expectedCost = new Money(Currency.GBP, expectedPriceInPence);
+
+        PostageCalculator postageCalculator = new PostageCalculator();
+        Money postageCost = postageCalculator.parcelPricing(TOP_TIER_WEIGHT, 10, 20, 10, Currency.GBP);
+
+        assertEquals(expectedCost, postageCost);
+    }
+
+
 
 }
