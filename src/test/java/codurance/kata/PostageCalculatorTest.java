@@ -9,7 +9,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class PostageCalculatorTest {
 
     private final int LOWER_TIER_HEIGHT = 229;
+    private final int MID_TIER_HEIGHT = 324;
+
     private final int LOWER_TIER_WIDTH = 162;
+
     private final int LOWER_TIER_DEPTH = 25;
 
 
@@ -28,6 +31,7 @@ public class PostageCalculatorTest {
         assertEquals(expectedCost, postageCost);
     }
 
+
     @Test
     public void apply_mid_parcel_pricing_to_a_package_with_lower_tier_dimensions_but_mid_tier_weight() {
 
@@ -36,6 +40,17 @@ public class PostageCalculatorTest {
 
         PostageCalculator postageCalculator = new PostageCalculator();
         Money postageCost = postageCalculator.parcelPricing(MID_TIER_WEIGHT, LOWER_TIER_HEIGHT, LOWER_TIER_WIDTH, LOWER_TIER_DEPTH, Currency.GBP);
+
+        assertEquals(expectedCost, postageCost);
+    }
+
+    @Test
+    public void apply_mid_parcel_pricing_to_a_package_with_mid_tier_height() {
+
+        Money expectedCost = new Money(Currency.GBP, BigDecimal.valueOf(LOWER_TIER_WEIGHT * 4));
+
+        PostageCalculator postageCalculator = new PostageCalculator();
+        Money postageCost = postageCalculator.parcelPricing(LOWER_TIER_WEIGHT, MID_TIER_HEIGHT, LOWER_TIER_WIDTH, LOWER_TIER_DEPTH, Currency.GBP);
 
         assertEquals(expectedCost, postageCost);
     }
