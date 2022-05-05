@@ -11,6 +11,10 @@ public class PostageCalculator {
 
         BigDecimal parcelCost = parcel.calculate();
 
+        if (currency.equals(Currency.EUR)) {
+            parcelCost = (parcelCost.add(BigDecimal.valueOf(20))).multiply(BigDecimal.valueOf(1.19));
+        }
+
         return new Money(currency, parcelCost);
     }
 

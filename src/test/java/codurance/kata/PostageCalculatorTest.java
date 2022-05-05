@@ -72,7 +72,9 @@ public class PostageCalculatorTest {
 
     @Test
     public void convert_price_to_euros() {
-        Money expectedCost = new Money(Currency.EUR, BigDecimal.valueOf(166.6));
+        Money expectedCost = new Money(Currency.EUR,
+                (BigDecimal.valueOf(120).add(BigDecimal.valueOf(20))).multiply(BigDecimal.valueOf(1.19)
+                ));
 
         PostageCalculator postageCalculator = new PostageCalculator();
         Money postageCost = postageCalculator.parcelPricing(
@@ -80,7 +82,7 @@ public class PostageCalculatorTest {
                 parcelProps.LOWER_TIER_HEIGHT,
                 parcelProps.LOWER_TIER_WIDTH,
                 parcelProps.LOWER_TIER_DEPTH,
-                Currency.GBP);
+                Currency.EUR);
 
         assertEquals(expectedCost, postageCost);
     }
