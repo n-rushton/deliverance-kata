@@ -18,5 +18,12 @@ public class MoneyShould {
         assertEquals(expectedResult, moneyInEUR);
     }
 
+    @Test
+    public void convert_from_GBP_to_USD() {
+        Money moneyInGBP = new Money(Currency.GBP, BigDecimal.valueOf(100));
+        Money moneyInEUR = moneyInGBP.convert(Currency.USD);
+        Money expectedResult = new Money(Currency.USD, BigDecimal.valueOf(150));
 
+        assertEquals(expectedResult, moneyInEUR);
+    }
 }
