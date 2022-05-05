@@ -6,14 +6,15 @@ import static java.lang.Math.max;
 
 public class PostageCalculator {
     public Money parcelPricing(int weight, int height, int width, int depth, Currency currency) {
-        BigDecimal parcelCost = BigDecimal.valueOf(120);
+        BigDecimal parcelCost = new SmallParcel(weight, height, width, depth).calculate();
+
 
         if (isLargeParcel(weight, height, width, depth)) {
-            parcelCost = calculateTopTierPricing(weight, height, width, depth);
+            parcelCost = new LargeParcel(weight, height, width, depth).calculate();
         }
 
         else if (isMediumParcel(weight, height, width, depth)) {
-            parcelCost =  BigDecimal.valueOf(weight * 4);
+            parcelCost =  new MediumParcel(weight, height, width, depth).calculate();
         }
 
         return new Money(currency, parcelCost);
@@ -28,9 +29,4 @@ public class PostageCalculator {
         return weight > 500 || height > 324 || width > 229 || depth > 100;
     }
 
-    private BigDecimal calculateTopTierPricing(int weight, int height, int width, int depth) {
-        BigDecimal weightPricingStrategy = BigDecimal.valueOf(weight * 6);
-        BigDecimal dimensionPricingStrategy = BigDecimal.valueOf(height * width * depth * 6 * 0.001);
-        return  weightPricingStrategy.max(dimensionPricingStrategy);
-    }
 }
