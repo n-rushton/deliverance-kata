@@ -35,7 +35,7 @@ public class PostageCalculatorTest {
     @ArgumentsSource(ParamsForMidSizedParcels.class)
     public void apply_mid_parcel_pricing(int weight, int height, int width, int depth) {
 
-        BigDecimal expectedPrice = BigDecimal.valueOf(weight * 4);
+        BigDecimal expectedPrice = BigDecimal.valueOf(weight * 4L);
         Money expectedCost = new Money(Currency.GBP, expectedPrice);
 
         PostageCalculator postageCalculator = new PostageCalculator();
@@ -48,7 +48,7 @@ public class PostageCalculatorTest {
     @ArgumentsSource(ParamsForLargeParcelsWeightBasedPricing.class)
     public void apply_large_parcel_weight_based_pricing_strategy(int weight, int height, int width, int depth) {
 
-        BigDecimal expectedPrice = BigDecimal.valueOf(weight * 6);
+        BigDecimal expectedPrice = BigDecimal.valueOf(weight * 6L);
         Money expectedCost = new Money(Currency.GBP, expectedPrice);
 
         PostageCalculator postageCalculator = new PostageCalculator();
@@ -66,6 +66,21 @@ public class PostageCalculatorTest {
 
         PostageCalculator postageCalculator = new PostageCalculator();
         Money postageCost = postageCalculator.parcelPricing(weight, height, width, depth, Currency.GBP);
+
+        assertEquals(expectedCost, postageCost);
+    }
+
+    @Test
+    public void convert_price_to_euros() {
+        Money expectedCost = new Money(Currency.EUR, BigDecimal.valueOf(166.6));
+
+        PostageCalculator postageCalculator = new PostageCalculator();
+        Money postageCost = postageCalculator.parcelPricing(
+                parcelProps.LOWER_TIER_WEIGHT,
+                parcelProps.LOWER_TIER_HEIGHT,
+                parcelProps.LOWER_TIER_WIDTH,
+                parcelProps.LOWER_TIER_DEPTH,
+                Currency.GBP);
 
         assertEquals(expectedCost, postageCost);
     }
