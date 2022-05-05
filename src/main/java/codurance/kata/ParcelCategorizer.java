@@ -1,8 +1,8 @@
 package codurance.kata;
 
-public class ParcelFactory {
+public class ParcelCategorizer {
 
-    public ParcelFactory() {
+    public ParcelCategorizer() {
     }
 
     public Parcel createParcel(int weight, int height, int width, int depth) {
