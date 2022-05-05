@@ -7,13 +7,9 @@ public class PostageCalculator {
     public Money parcelPricing(int weight, int height, int width, int depth, Currency currency) {
         Parcel parcel = parcelFactory.createParcel(weight, height, width, depth);
 
-        Money parcelCost = parcel.calculate();
+        Money baseParcelCost = parcel.calculate();
 
-        if (currency.equals(Currency.EUR) || currency.equals(Currency.USD)) {
-            parcelCost = parcelCost.convert(currency);
-        }
-
-        return parcelCost;
+        return baseParcelCost.convert(currency);
     }
 
 }

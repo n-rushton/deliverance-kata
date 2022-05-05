@@ -13,7 +13,11 @@ public class Money {
     }
 
     public Money convert(Currency currencyToConvertTo) {
-        BigDecimal newAmount = (amount.add(BigDecimal.valueOf(20))).multiply(BigDecimal.valueOf(1.19));
+        BigDecimal newAmount = amount;
+
+        if (currencyToConvertTo == Currency.EUR) {
+            newAmount = (amount.add(BigDecimal.valueOf(20))).multiply(BigDecimal.valueOf(1.19));
+        }
         if (currencyToConvertTo == Currency.USD) {
             newAmount = (amount.add(BigDecimal.valueOf(20))).multiply(BigDecimal.valueOf(1.25));
         }
