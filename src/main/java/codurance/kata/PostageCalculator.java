@@ -8,7 +8,7 @@ public class PostageCalculator {
     public Money parcelPricing(int weight, int height, int width, int depth, Currency currency) {
         BigDecimal parcelCost = BigDecimal.valueOf(120);
 
-        if (weight > 500) {
+        if (weight > 500 || height > 324 || width > 229) {
             parcelCost = calculateTopTierPricing(weight, height, width, depth);
         }
 

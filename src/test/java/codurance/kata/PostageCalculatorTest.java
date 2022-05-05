@@ -88,6 +88,9 @@ class ParcelProperties {
     final int MID_TIER_WIDTH = 229;
     final int MID_TIER_DEPTH = 100;
 
+    final int TOP_TIER_HEIGHT = 325;
+    final int TOP_TIER_WIDTH = 230;
+    final int TOP_TIER_DEPTH = 101;
 
     final int LOWER_TIER_WEIGHT = 60;
     final int MID_TIER_WEIGHT = 500;
@@ -117,7 +120,9 @@ class ParamsForLargeParcelsWeightBasedPricing implements ArgumentsProvider {
     public Stream<? extends Arguments> provideArguments(ExtensionContext context) throws Exception {
 
         return Stream.of(
-                Arguments.of(parcelProps.TOP_TIER_WEIGHT, 10, 20, 10)
+                Arguments.of(parcelProps.TOP_TIER_WEIGHT, 10, 20, 10),
+                Arguments.of(parcelProps.MID_TIER_WEIGHT, parcelProps.TOP_TIER_HEIGHT, 20, 10),
+                Arguments.of(parcelProps.MID_TIER_WEIGHT, 10, parcelProps.TOP_TIER_WIDTH, 10)
         );
     }
 }
