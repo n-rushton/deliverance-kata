@@ -5,6 +5,7 @@ public class Money {
 
     private final Currency currency;
     private final BigDecimal amount;
+    private final BigDecimal CONVERSION_CHARGE = BigDecimal.valueOf(20);
 
     public Money(Currency currency, BigDecimal amount) {
         this.currency = currency;
@@ -17,16 +18,17 @@ public class Money {
             return this;
         }
 
+        BigDecimal conversionRate = getConversionRate(currencyToConvertTo);
+        BigDecimal convertedAmount = (amount.add(CONVERSION_CHARGE)).multiply(conversionRate);
 
-        BigDecimal conversionAmount = BigDecimal.valueOf(1.19);
+        return new Money(currencyToConvertTo, convertedAmount);
+    }
 
-        if (currencyToConvertTo == Currency.USD) {
-            conversionAmount = BigDecimal.valueOf(1.25);
+    private BigDecimal getConversionRate(Currency currencyToConvertTo) {
+        if (currencyToConvertTo == Currency.EUR) {
+            return BigDecimal.valueOf(1.19);
         }
-
-        BigDecimal newAmount = (amount.add(BigDecimal.valueOf(20))).multiply(conversionAmount);
-
-        return new Money(currencyToConvertTo, newAmount);
+        return BigDecimal.valueOf(1.25);
     }
 
     @Override
