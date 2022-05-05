@@ -16,6 +16,9 @@ class ParcelProperties {
     final int LOWER_TIER_DEPTH = 25;
 
     final int MID_TIER_HEIGHT = 324;
+    final int MID_TIER_WIDTH = 229;
+    final int MID_TIER_DEPTH = 100;
+
 
     final int LOWER_TIER_WEIGHT = 60;
     final int MID_TIER_WEIGHT = 500;
@@ -32,7 +35,10 @@ class ProvideParamsForMidSizedParcels implements ArgumentsProvider {
 
         return Stream.of(
                 Arguments.of(parcelProps.MID_TIER_WEIGHT, parcelProps.LOWER_TIER_HEIGHT, parcelProps.LOWER_TIER_WIDTH, parcelProps.LOWER_TIER_DEPTH),
-                Arguments.of(parcelProps.LOWER_TIER_WEIGHT, parcelProps.MID_TIER_HEIGHT, parcelProps.LOWER_TIER_WIDTH, parcelProps.LOWER_TIER_DEPTH)
+                Arguments.of(parcelProps.LOWER_TIER_WEIGHT, parcelProps.MID_TIER_HEIGHT, parcelProps.LOWER_TIER_WIDTH, parcelProps.LOWER_TIER_DEPTH),
+                Arguments.of(parcelProps.LOWER_TIER_WEIGHT, parcelProps.LOWER_TIER_HEIGHT, parcelProps.MID_TIER_WIDTH, parcelProps.LOWER_TIER_DEPTH),
+                Arguments.of(parcelProps.LOWER_TIER_WEIGHT, parcelProps.LOWER_TIER_HEIGHT, parcelProps.LOWER_TIER_WIDTH, parcelProps.MID_TIER_DEPTH)
+
                 );
     }
 }

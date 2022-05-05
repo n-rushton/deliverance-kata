@@ -12,7 +12,7 @@ public class PostageCalculator {
             parcelCost = calculateTopTierPricing(weight, height, width, depth);
         }
 
-        else if (weight > 60 || height > 229) {
+        else if (weight > 60 || height > 229 || width > 162 || depth > 25) {
             parcelCost =  BigDecimal.valueOf(weight * 4);
         }
 
