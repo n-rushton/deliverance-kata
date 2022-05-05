@@ -10,38 +10,6 @@ import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class ParcelProperties {
-    final int LOWER_TIER_HEIGHT = 229;
-    final int LOWER_TIER_WIDTH = 162;
-    final int LOWER_TIER_DEPTH = 25;
-
-    final int MID_TIER_HEIGHT = 324;
-    final int MID_TIER_WIDTH = 229;
-    final int MID_TIER_DEPTH = 100;
-
-
-    final int LOWER_TIER_WEIGHT = 60;
-    final int MID_TIER_WEIGHT = 500;
-    final int TOP_TIER_WEIGHT = 501;
-}
-
-class ProvideParamsForMidSizedParcels implements ArgumentsProvider {
-
-    ParcelProperties parcelProps = new ParcelProperties();
-
-
-    @Override
-    public Stream<? extends Arguments> provideArguments(ExtensionContext context) throws Exception {
-
-        return Stream.of(
-                Arguments.of(parcelProps.MID_TIER_WEIGHT, parcelProps.LOWER_TIER_HEIGHT, parcelProps.LOWER_TIER_WIDTH, parcelProps.LOWER_TIER_DEPTH),
-                Arguments.of(parcelProps.LOWER_TIER_WEIGHT, parcelProps.MID_TIER_HEIGHT, parcelProps.LOWER_TIER_WIDTH, parcelProps.LOWER_TIER_DEPTH),
-                Arguments.of(parcelProps.LOWER_TIER_WEIGHT, parcelProps.LOWER_TIER_HEIGHT, parcelProps.MID_TIER_WIDTH, parcelProps.LOWER_TIER_DEPTH),
-                Arguments.of(parcelProps.LOWER_TIER_WEIGHT, parcelProps.LOWER_TIER_HEIGHT, parcelProps.LOWER_TIER_WIDTH, parcelProps.MID_TIER_DEPTH)
-
-                );
-    }
-}
 
 public class PostageCalculatorTest {
 
@@ -70,10 +38,23 @@ public class PostageCalculatorTest {
     }
 
     @ParameterizedTest
-    @ArgumentsSource(ProvideParamsForMidSizedParcels.class)
-    public void apply_mid_parcel_pricing_to_a_package_with_lower_tier_dimensions_but_mid_tier_weight(int weight, int height, int width, int depth) {
+    @ArgumentsSource(ParamsForMidSizedParcels.class)
+    public void apply_mid_parcel_pricing(int weight, int height, int width, int depth) {
 
         BigDecimal expectedPrice = BigDecimal.valueOf(weight * 4);
+        Money expectedCost = new Money(Currency.GBP, expectedPrice);
+
+        PostageCalculator postageCalculator = new PostageCalculator();
+        Money postageCost = postageCalculator.parcelPricing(weight, height, width, depth, Currency.GBP);
+
+        assertEquals(expectedCost, postageCost);
+    }
+
+    @ParameterizedTest
+    @ArgumentsSource(ParamsForLargeParcelsWeightBasedPricing.class)
+    public void apply_large_parcel_weight_based_pricing_strategy(int weight, int height, int width, int depth) {
+
+        BigDecimal expectedPrice = BigDecimal.valueOf(weight * 6);
         Money expectedCost = new Money(Currency.GBP, expectedPrice);
 
         PostageCalculator postageCalculator = new PostageCalculator();
@@ -95,18 +76,48 @@ public class PostageCalculatorTest {
         assertEquals(expectedCost, postageCost);
     }
 
-    @Test
-    public void apply_large_parcel_pricing_to_a_package_with_lower_tier_dimensions_but_large_tier_weight_pricing_strategy_2() {
+}
 
-        BigDecimal expectedPriceInPence = BigDecimal.valueOf(TOP_TIER_WEIGHT * 6);
-        Money expectedCost = new Money(Currency.GBP, expectedPriceInPence);
 
-        PostageCalculator postageCalculator = new PostageCalculator();
-        Money postageCost = postageCalculator.parcelPricing(TOP_TIER_WEIGHT, 10, 20, 10, Currency.GBP);
+class ParcelProperties {
+    final int LOWER_TIER_HEIGHT = 229;
+    final int LOWER_TIER_WIDTH = 162;
+    final int LOWER_TIER_DEPTH = 25;
 
-        assertEquals(expectedCost, postageCost);
+    final int MID_TIER_HEIGHT = 324;
+    final int MID_TIER_WIDTH = 229;
+    final int MID_TIER_DEPTH = 100;
+
+
+    final int LOWER_TIER_WEIGHT = 60;
+    final int MID_TIER_WEIGHT = 500;
+    final int TOP_TIER_WEIGHT = 501;
+}
+
+class ParamsForMidSizedParcels implements ArgumentsProvider {
+
+    ParcelProperties parcelProps = new ParcelProperties();
+
+    @Override
+    public Stream<? extends Arguments> provideArguments(ExtensionContext context) throws Exception {
+
+        return Stream.of(
+                Arguments.of(parcelProps.MID_TIER_WEIGHT, parcelProps.LOWER_TIER_HEIGHT, parcelProps.LOWER_TIER_WIDTH, parcelProps.LOWER_TIER_DEPTH),
+                Arguments.of(parcelProps.LOWER_TIER_WEIGHT, parcelProps.MID_TIER_HEIGHT, parcelProps.LOWER_TIER_WIDTH, parcelProps.LOWER_TIER_DEPTH),
+                Arguments.of(parcelProps.LOWER_TIER_WEIGHT, parcelProps.LOWER_TIER_HEIGHT, parcelProps.MID_TIER_WIDTH, parcelProps.LOWER_TIER_DEPTH),
+                Arguments.of(parcelProps.LOWER_TIER_WEIGHT, parcelProps.LOWER_TIER_HEIGHT, parcelProps.LOWER_TIER_WIDTH, parcelProps.MID_TIER_DEPTH)
+        );
     }
+}
 
+class ParamsForLargeParcelsWeightBasedPricing implements ArgumentsProvider {
+    ParcelProperties parcelProps = new ParcelProperties();
 
+    @Override
+    public Stream<? extends Arguments> provideArguments(ExtensionContext context) throws Exception {
 
+        return Stream.of(
+                Arguments.of(parcelProps.TOP_TIER_WEIGHT, 10, 20, 10)
+        );
+    }
 }
