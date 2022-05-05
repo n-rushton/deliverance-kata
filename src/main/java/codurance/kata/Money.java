@@ -1,5 +1,5 @@
 package codurance.kata;
 
-public record Money(Currency currency, int amountInPence) {
+public record Money(Currency currency, java.math.BigDecimal amount) {
 
 }
