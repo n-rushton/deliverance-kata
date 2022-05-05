@@ -9,7 +9,7 @@ public class PostageCalculator {
 
         Money baseParcelCost = parcel.calculate();
 
-        return baseParcelCost.convert(currency);
+        return baseParcelCost.convertFromGBP(currency);
     }
 
 }

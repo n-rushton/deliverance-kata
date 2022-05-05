@@ -1,6 +1,5 @@
 package codurance.kata;
 import java.math.BigDecimal;
-import java.util.Objects;
 
 public class Money {
 
@@ -12,16 +11,20 @@ public class Money {
         this.amount = amount;
     }
 
-    public Money convert(Currency currencyToConvertTo) {
-        BigDecimal newAmount = amount;
+    public Money convertFromGBP(Currency currencyToConvertTo) {
 
-        if (currencyToConvertTo == Currency.EUR) {
-            newAmount = (amount.add(BigDecimal.valueOf(20))).multiply(BigDecimal.valueOf(1.19));
+        if (currencyToConvertTo == Currency.GBP) {
+            return this;
         }
+
+
+        BigDecimal conversionAmount = BigDecimal.valueOf(1.19);
+
         if (currencyToConvertTo == Currency.USD) {
-            newAmount = (amount.add(BigDecimal.valueOf(20))).multiply(BigDecimal.valueOf(1.25));
+            conversionAmount = BigDecimal.valueOf(1.25);
         }
 
+        BigDecimal newAmount = (amount.add(BigDecimal.valueOf(20))).multiply(conversionAmount);
 
         return new Money(currencyToConvertTo, newAmount);
     }
