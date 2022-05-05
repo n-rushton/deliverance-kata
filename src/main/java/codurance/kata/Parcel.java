@@ -7,6 +7,8 @@ public abstract class Parcel implements ParcelPricing {
     protected final int width;
     protected final int depth;
 
+    protected final Currency baseCurrency = Currency.GBP;
+
     public Parcel(int weight, int height, int width, int depth) {
         this.weight = weight;
         this.height = height;

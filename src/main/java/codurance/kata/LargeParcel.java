@@ -8,9 +8,11 @@ public class LargeParcel extends Parcel{
     }
 
     @Override
-    public BigDecimal calculate() {
+    public Money calculate() {
         BigDecimal weightPricingStrategy = BigDecimal.valueOf(weight * 6);
         BigDecimal dimensionPricingStrategy = BigDecimal.valueOf(height * width * depth * 6 * 0.001);
-        return  weightPricingStrategy.max(dimensionPricingStrategy);
+        BigDecimal price =  weightPricingStrategy.max(dimensionPricingStrategy);
+
+        return new Money(baseCurrency, price);
     }
 }

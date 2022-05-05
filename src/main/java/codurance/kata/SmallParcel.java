@@ -10,7 +10,7 @@ public class SmallParcel extends Parcel {
 
 
     @Override
-    public BigDecimal calculate() {
-        return BigDecimal.valueOf(120);
+    public Money calculate() {
+        return new Money(baseCurrency, BigDecimal.valueOf(120));
     }
 }

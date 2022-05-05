@@ -9,13 +9,13 @@ public class PostageCalculator {
     public Money parcelPricing(int weight, int height, int width, int depth, Currency currency) {
         Parcel parcel = parcelFactory.createParcel(weight, height, width, depth);
 
-        BigDecimal parcelCost = parcel.calculate();
+        Money parcelCost = parcel.calculate();
 
         if (currency.equals(Currency.EUR)) {
-            parcelCost = (parcelCost.add(BigDecimal.valueOf(20))).multiply(BigDecimal.valueOf(1.19));
+            parcelCost = new Money(Currency.EUR, parcelCost.amount().add(BigDecimal.valueOf(20)).multiply(BigDecimal.valueOf(1.19)));
         }
 
-        return new Money(currency, parcelCost);
+        return parcelCost;
     }
 
 }
