@@ -4,8 +4,8 @@ import java.math.BigDecimal;
 
 public class CurrencyConverter {
     final BigDecimal CONVERSION_CHARGE = BigDecimal.valueOf(20);
-    final double EUR_EXCHANGE_RATE = 1.19;
-    final double USD_EXCHANGE_RATE = 1.25;
+    final BigDecimal EUR_EXCHANGE_RATE = BigDecimal.valueOf(1.19);
+    final BigDecimal USD_EXCHANGE_RATE = BigDecimal.valueOf(1.25);
 
     public CurrencyConverter() {
     }
@@ -23,8 +23,8 @@ public class CurrencyConverter {
 
     public BigDecimal getConversionRate(Currency currencyToConvertTo) {
         if (currencyToConvertTo == Currency.EUR) {
-            return BigDecimal.valueOf(EUR_EXCHANGE_RATE);
+            return EUR_EXCHANGE_RATE;
         }
-        return BigDecimal.valueOf(USD_EXCHANGE_RATE);
+        return USD_EXCHANGE_RATE;
     }
 }
