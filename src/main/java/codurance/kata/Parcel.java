@@ -1,6 +1,6 @@
 package codurance.kata;
 
-public abstract class Parcel implements ParcelPricing {
+public abstract class Parcel {
 
     protected final int weight;
     protected final int height;
@@ -15,4 +15,6 @@ public abstract class Parcel implements ParcelPricing {
         this.width = width;
         this.depth = depth;
     }
+
+    abstract Money calculate();
 }
